@@ -31,6 +31,8 @@
 Elf64_Ehdr *pme_elf64_hdr;
 Elf32_Ehdr *pme_elf32_hdr;
 
+Elf64_Shdr *pme_shstr_hdr;
+char *shstrtab_ptr;
 
 //pme_err_exit(): Routine which will be called if an error has occured.
 void pme_err_exit(const char *errmsg);
@@ -53,6 +55,6 @@ void pme_display_ph_entry(Elf64_Phdr *pme_ph_hdr, int ph_ent_no);
 void pme_parse_sh_table(char *pme_elf_ptr);
 
 //Routine displays contents of a specified Section Header Entry.
-void pme_display_sh_entry(Elf64_Shdr *pme_sh_hdr, char *sh_strtab_ptr, int sh_ent_no);
+void pme_display_sh_entry(Elf64_Shdr *pme_sh_hdr, int sh_ent_no);
 
 #endif

@@ -52,7 +52,7 @@ int main(int argc, char **argv) {
 		printf("\n\nOptions: \n");
 		printf("0. ELF Header details \n");
 		printf("1. Program Header Table entries \n");
-		//printf("2. Section Header Table entries \n");
+		printf("2. Section Header Table entries \n");
 			
 		scanf("%d", &choice);
 		switch(choice) {
@@ -63,9 +63,9 @@ int main(int argc, char **argv) {
 			case 1:
 				pme_parse_ph_table(pme_file_ptr);
 				break;
-		//	case 2:
-		//		pme_parse_sh_table(pme_file_ptr);
-		//		break;
+			case 2:
+				pme_parse_sh_table(pme_file_ptr);
+				break;
 			default:
 				printf("\nAll other stuff are yet to be implemented\n");
 				system("clear");

@@ -8,7 +8,6 @@
  * 
  * Author: Adwaith V Gautham
  *
- * TODO: The tool at present is not printing Program Header flags. Should do it.
  */
 
 #include"pme.h"
@@ -27,7 +26,7 @@ void pme_parse_ph_table(char *pme_elf_ptr) {
 	ph_entry_size = pme_elf64_hdr->e_phentsize;
 	ph_entry_count = pme_elf64_hdr->e_phnum;
 
-	printf("Offset at which Program Header table is found: %lu bytes\n", ph_offset);
+	printf("Offset at which Program Header Table is found: %lu bytes\n", ph_offset);
 	printf("Number of Program Header Entries: %d\n", ph_entry_count);
 	printf("Size of each Program Header Entry: %d bytes\n", ph_entry_size);
 	
