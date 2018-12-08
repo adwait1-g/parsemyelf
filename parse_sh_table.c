@@ -8,6 +8,8 @@
  *
  * Author: Adwaith V Gautham
  *
+ * BUG: For sections .shstrtab, .symtab, .strtab, .comment, Section Flags are wrong. 
+ *
  */
 
 #include"pme.h"
@@ -29,12 +31,6 @@ void pme_parse_sh_table(char *pme_elf_ptr) {
 	sh_entry_count = pme_elf64_hdr->e_shnum;
 
 
-	// Populate pointers for Section Header String Table 's section header. 
-	pme_shstr_hdr = (Elf64_Shdr *)(pme_elf_ptr + sh_off + sh_entry_size * pme_elf64_hdr->e_shstrndx);
-
-	// Find the Section Header String Table - which is a section. 
-	shstrtab_ptr = pme_elf_ptr + pme_shstr_hdr->sh_offset;
-
 	//General details about Section Header Table
 	printf("Offset at which Section Header Table is found: %lu bytes\n", sh_off);
 	printf("Number of Section Header Entries: %d\n", sh_entry_count);
@@ -46,7 +42,8 @@ void pme_parse_sh_table(char *pme_elf_ptr) {
 	
 		printf("--------------------------------------------------------------------\n");
 		pme_sh_hdr = (Elf64_Shdr *)(pme_elf_ptr + sh_off + sh_entry_size * i);
-		pme_display_sh_entry(pme_sh_hdr, i);
+		printf("Section Number: %d\n", i);
+		pme_display_sh_entry(pme_sh_hdr);
 		printf("\n");
 	}
 
@@ -56,10 +53,7 @@ void pme_parse_sh_table(char *pme_elf_ptr) {
 }
 
 
-void pme_display_sh_entry(Elf64_Shdr *pme_sh_hdr, int sh_ent_no) {
-	
-	//Section number
-	printf("Section Number: %d\n", sh_ent_no);
+void pme_display_sh_entry(Elf64_Shdr *pme_sh_hdr) {
 	
 	//Section name
 	printf("Section Name: %s\n", shstrtab_ptr + pme_sh_hdr->sh_name);
@@ -236,6 +230,9 @@ void pme_display_sh_entry(Elf64_Shdr *pme_sh_hdr, int sh_ent_no) {
 	else if(flags == SHF_EXECINSTR | SHF_ALLOC)
 		printf("SHF_EXECINSTR | SHF_ALLOC");
 
+	else if(flags == SHF_MERGE | SHF_STRINGS)
+		printf("SHF_MERGE | SHF_STRINGS");
+
 	else
 		printf("Something wrong or I have not parsed");
 
@@ -245,11 +242,11 @@ void pme_display_sh_entry(Elf64_Shdr *pme_sh_hdr, int sh_ent_no) {
 
 	
 	// Section file offset
-	printf("\nSection File Offset: 0x%lx", pme_sh_hdr->sh_offset);
+	printf("\nSection File Offset: %lu", pme_sh_hdr->sh_offset);
 
 	
 	// Section size in bytes
-	printf("\nSection Size: 0x%lx bytes", pme_sh_hdr->sh_size);
+	printf("\nSection Size: %lu bytes", pme_sh_hdr->sh_size);
 
 	// Link to another section
 	printf("\nLink to another Section: %u", pme_sh_hdr->sh_link);

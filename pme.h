@@ -31,8 +31,35 @@
 Elf64_Ehdr *pme_elf64_hdr;
 Elf32_Ehdr *pme_elf32_hdr;
 
+
+//Section Header String Table Details. 
 Elf64_Shdr *pme_shstr_hdr;
 char *shstrtab_ptr;
+int shstrtab_index;
+
+
+// Symbol Table - .symtab section details. 
+Elf64_Shdr *pme_symtab_hdr;
+char *symtab_ptr;
+int symtab_index;
+
+
+// Dynamic Symbol Table - .dynsym section details. 
+Elf64_Shdr *pme_dynsym_hdr;
+char *dynsym_ptr;
+int dynsym_index;
+
+// String Table - .strtab section details. 
+Elf64_Shdr *pme_strtab_hdr;
+char *strtab_ptr;
+int strtab_index;
+
+
+
+
+
+
+
 
 //pme_err_exit(): Routine which will be called if an error has occured.
 void pme_err_exit(const char *errmsg);
@@ -55,6 +82,14 @@ void pme_display_ph_entry(Elf64_Phdr *pme_ph_hdr, int ph_ent_no);
 void pme_parse_sh_table(char *pme_elf_ptr);
 
 //Routine displays contents of a specified Section Header Entry.
-void pme_display_sh_entry(Elf64_Shdr *pme_sh_hdr, int sh_ent_no);
+void pme_display_sh_entry(Elf64_Shdr *pme_sh_hdr);
+
+// Name says it all!
+void pme_parse_symbol_table();
+
+void pme_display_symbol(Elf64_Sym *symtab_entry_ptr);
 
 #endif
+
+
+
