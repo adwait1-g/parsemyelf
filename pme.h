@@ -22,7 +22,7 @@
 #include<sys/mman.h>
 #include<string.h>
 #include<elf.h>
-
+#include<capstone/capstone.h>
 
 //Structures required.
 
@@ -54,15 +54,25 @@ Elf64_Shdr *pme_strtab_hdr;
 char *strtab_ptr;
 int strtab_index;
 
+// .text Section details
+Elf64_Shdr *pme_text_hdr;
+char *text_ptr;
+int text_index;
 
 
-
+// .rodata Section details
+Elf64_Shdr *pme_rodata_hdr;
+char *rodata_ptr;
+int rodata_index;
 
 
 
 
 //pme_err_exit(): Routine which will be called if an error has occured.
 void pme_err_exit(const char *errmsg);
+
+//Init routine
+void pme_init();
 
 
 //This routine updates the ELF Header data structure.  
@@ -88,6 +98,11 @@ void pme_display_sh_entry(Elf64_Shdr *pme_sh_hdr);
 void pme_parse_symbol_table();
 
 void pme_display_symbol(Elf64_Sym *symtab_entry_ptr);
+
+void pme_parse_text_section();
+
+void pme_parse_rodata_section();
+
 
 #endif
 
