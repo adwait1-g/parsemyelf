@@ -50,6 +50,7 @@ int main(int argc, char **argv) {
 		printf("3. Symbol Table(.symtab) entries \n");
 		printf("4. .text Section (Gives the disassembly)\n");
 		printf("5. .rodata Section \n");
+		printf("6. .strtab Section \n");
 			
 		scanf("%d", &choice);
 
@@ -75,6 +76,10 @@ int main(int argc, char **argv) {
 
 			case 5: 
 				pme_parse_rodata_section();
+				break;
+
+			case 6:
+				pme_parse_strtab_section();
 				break;
 
 			default:

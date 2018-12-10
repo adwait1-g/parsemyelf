@@ -69,6 +69,12 @@ void pme_init(unsigned char *pme_file_ptr) {
 			rodata_ptr = (char *)(pme_file_ptr + section_hdr->sh_offset);
 		}
 
+		else if(strcmp(shstrtab_ptr + section_hdr->sh_name, ".strtab") == 0) {
+			strtab_index = i;
+			pme_strtab_hdr = section_hdr;
+			strtab_ptr = (char *)(pme_file_ptr + section_hdr->sh_offset);
+		}
+
         }
 
         return;

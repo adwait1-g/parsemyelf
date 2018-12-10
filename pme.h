@@ -66,6 +66,10 @@ char *rodata_ptr;
 int rodata_index;
 
 
+// .strtab Section details
+Elf64_Shdr *pme_strtab_hdr;
+char *strtab_ptr;
+int strtab_index;
 
 
 //pme_err_exit(): Routine which will be called if an error has occured.
@@ -102,6 +106,8 @@ void pme_display_symbol(Elf64_Sym *symtab_entry_ptr);
 void pme_parse_text_section();
 
 void pme_parse_rodata_section();
+
+void pme_parse_strtab_section();
 
 
 #endif
