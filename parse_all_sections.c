@@ -16,7 +16,8 @@
 // Parse text section
 void pme_parse_text_section() {
 
-        printf("###########################.text Section###############################\n");
+	printf("\n\n");
+        printf("############################.text Section###############################");
 
         // Using capstone to disassemble the complete .text section
         csh handle;
@@ -32,7 +33,8 @@ void pme_parse_text_section() {
                 size_t j;
 
                 for(j = 0; j < count; j++) {
-                        printf("0x%lx:  %s      %s\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
+                        printf("0x%lx:  %s      %s", insn[j].address, insn[j].mnemonic, insn[j].op_str);
+			printf("\n");
                 }
 
                 cs_free(insn, count);
@@ -49,19 +51,20 @@ void pme_parse_text_section() {
 
 // Parse symbol table
 void pme_parse_symbol_table() {
+	
+	printf("\n\n");
+        printf("##########################.symtab Section#############################");
 
-        printf("#########################Symbol Table#############################\n");
-
-        printf("\nSection Number: %d\n", symtab_index);
-        printf("\nSection Name: %s\n", shstrtab_ptr + pme_symtab_hdr->sh_name);
+	printf("\n\n");
+        printf("Section Number: %d", symtab_index);
 
         Elf64_Sym *symtab_entry_ptr;
 
         int number_of_entries = (pme_symtab_hdr->sh_size) / (pme_symtab_hdr->sh_entsize);
 
-        printf("\nSymbol Table .symtab has %d entries.\n", number_of_entries);
+        printf("\nSymbol Table .symtab has %d entries.", number_of_entries);
 
-        printf("\nNumber, Value, Size, Binding, Type, Visibility, Index, Name\n");
+        printf("\n\nNumber, Value, Size, Binding, Type, Visibility, Index, Name\n");
 
 
         for(int i = 0; i < number_of_entries; i++) {
@@ -225,15 +228,16 @@ void pme_parse_rodata_section() {
 
 void pme_parse_strtab_section() {
 
-        printf("##############################.strtab Section###############################\n");
+        printf("\n\n##############################.strtab Section###############################");
 
-        printf("\nSection number: %d\n", strtab_index);
+        printf("\n\nSection number: %d", strtab_index);
 
         char *ptr = strtab_ptr;
         int str_count = 0;
 
-        printf("These are the strings present in .strtab section: \n\n");
+        printf("\n\nThese are the strings present in .strtab section: ");
 
+	printf("\n\n");
         // Ignore the first NULL Character present in the section.
         ptr++;
         for(int i = 0; i < pme_strtab_hdr->sh_size; i++) {
@@ -244,5 +248,194 @@ void pme_parse_strtab_section() {
 
         return;
 }
+
+
+/**************************************************************************/
+// Parse .data section
+//TODO: Link it with symbols so that the values in .data section look meaningful
+void pme_parse_data_section() {
+
+	printf("\n\n#############################.data Section####################################");
+
+	printf("\n\nSection number: %d", data_index);
+
+
+	printf("\n");
+	char *ptr = data_ptr;
+
+	for(int i = 0; i < pme_data_hdr->sh_size; i++) {
+		printf("%x ", *ptr);
+		ptr++;
+	}
+
+	return;
+}
+
+
+
+/**************************************************************************/
+//Parse .bss section
+// TODO: Link it with symbols so that the values in .bss section look meaningful
+
+void pme_parse_bss_section() {
+
+	printf("\n\n##############################.bss Section##################################");
+
+	printf("\n\nSection number: %d", bss_index);
+
+	char *ptr = bss_ptr;
+
+	printf("\n\nThe following is present in this section: ");
+	printf("\n\n");
+	for(int i = 0; i < pme_bss_hdr->sh_size; i++) {
+		printf("%x ", *ptr);
+		ptr++;
+	}
+
+	return;
+}
+
+
+/**************************************************************************/
+// Parse .comment section
+
+void pme_parse_comment_section() {
+
+	printf("\n\n##############################.comment Section##############################");
+
+	printf("\n\nSection number: %d", comment_index);
+
+	printf("\n\nThere is only 1 string in this section: ");
+	printf("\n\n%s\n", comment_ptr);
+
+	return;
+}
+
+
+/**************************************************************************/
+// Parse .interp section
+
+void pme_parse_interp_section() {
+
+	printf("\n\n###############################.interp Section##############################");
+
+	printf("\n\nSection number: %d", interp_index);
+	printf("\n\nPath to the interpreter to be used: %s\n", interp_ptr);
+
+	return;
+}
+
+
+/*************************************************************************/
+// Parse .note.ABI-tag section
+// TODO: To understand this section completely and get meaning from it. 
+
+void pme_parse_noteabi_section() {
+
+	printf("\n\n##############################.note.ABI-tag Section#########################");
+
+	printf("\n\nSection number: %d", noteabi_index);
+
+
+	// Populate the Elf64_Nhdr. 
+	Elf64_Nhdr *note_hdr;
+	note_hdr = (Elf64_Nhdr *)(noteabi_ptr);
+	printf("\n\nLength of note's name: %u", note_hdr->n_namesz);
+	printf("\nLength of note's descriptor: %u", note_hdr->n_descsz);
+
+	printf("\nType of note: ");
+	if(note_hdr->n_type == NT_GNU_ABI_TAG)
+		printf("NT_GNU_ABI_TAG");
+
+	char *ptr = noteabi_ptr + sizeof(Elf64_Nhdr);
+	
+	printf("\nNote Owner: %s", ptr);
+	ptr = ptr + note_hdr->n_namesz;
+	int *int_ptr = (int *)ptr;
+
+	printf("\nOS: ");
+	if(int_ptr[0] == ELF_NOTE_OS_LINUX)
+		printf("ELF_NOTE_OS_LINUX");
+
+	else if(int_ptr[0] == ELF_NOTE_OS_GNU)
+		printf("ELF_NOTE_OS_GNU");
+
+	else if(int_ptr[0] == ELF_NOTE_OS_SOLARIS2)
+		printf("ELF_NOTE_OS_SOLARIS2");
+
+	else if(int_ptr[0] == ELF_NOTE_OS_FREEBSD)
+		printf("ELF_NOTE_OS_FREEBSD");
+
+	printf("\nABI Version: %d.%d.%d\n", int_ptr[1], int_ptr[2], int_ptr[3]);
+
+	return;
+}
+
+/*************************************************************************/
+// Parse: .note.gnu.build-id section
+
+void pme_parse_buildid_section() {
+
+	printf("##############################.note.gnu.build-id Section###############################");
+
+	printf("\n\nSection number: %d", buildid_index);
+
+	Elf64_Nhdr *note_hdr;
+	
+	note_hdr = (Elf64_Nhdr *)buildid_ptr;
+	printf("\n\nLength of note's name: %d", note_hdr->n_namesz);
+	printf("\nLength of note's descriptor: %d", note_hdr->n_descsz);
+	printf("\nType of note: ");
+	if(note_hdr->n_type == NT_GNU_BUILD_ID)
+		printf("NT_GNU_BUILD_ID");
+
+	char *ptr = buildid_ptr + sizeof(Elf64_Nhdr);
+
+	printf("\nNote owner: %s", ptr);
+
+	ptr = ptr + note_hdr->n_namesz;
+
+	unsigned char *uptr = (unsigned char *)ptr;
+	printf("\nBuild-ID: ");
+	for(int i = 0; i < note_hdr->n_descsz; i++) {
+		printf("%02x", *uptr);
+		uptr++;
+	}
+	
+	return;
+}
+
+
+/***********************************************************************/
+// Parse .gnu.hash section
+/*
+
+void pme_parse_gnuhash_section() {
+
+	printf("\n\n#############################.gnu.hash Section###############################");
+	printf("\n\nSection number: %d", gnuhash_index);
+
+	unsigned  char *ptr = (unsigned char *)gnuhash_ptr;
+
+	for(int i = 0; i < pme_gnuhash_hdr->sh_size; i++) {
+		printf("%02x ", *ptr);
+		ptr++;
+	}
+
+	return;
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
 
 

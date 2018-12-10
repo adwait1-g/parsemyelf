@@ -49,11 +49,6 @@ Elf64_Shdr *pme_dynsym_hdr;
 char *dynsym_ptr;
 int dynsym_index;
 
-// String Table - .strtab section details. 
-Elf64_Shdr *pme_strtab_hdr;
-char *strtab_ptr;
-int strtab_index;
-
 // .text Section details
 Elf64_Shdr *pme_text_hdr;
 char *text_ptr;
@@ -70,6 +65,41 @@ int rodata_index;
 Elf64_Shdr *pme_strtab_hdr;
 char *strtab_ptr;
 int strtab_index;
+
+// .data Section details.
+Elf64_Shdr *pme_data_hdr;
+char *data_ptr;
+int data_index;
+
+// .bss Section details. 
+Elf64_Shdr *pme_bss_hdr;
+char *bss_ptr;
+int bss_index;
+
+// .comment Section details
+Elf64_Shdr *pme_comment_hdr;
+char *comment_ptr;
+int comment_index;
+
+// .interp Section details
+Elf64_Shdr *pme_interp_hdr;
+char *interp_ptr;
+int interp_index;
+
+// .note.ABI-tag Section details
+Elf64_Shdr *pme_noteabi_hdr;
+char *noteabi_ptr;
+int noteabi_index;
+
+// .note.gnu.build-id Section details
+Elf64_Shdr *pme_buildid_hdr;
+char *buildid_ptr;
+int buildid_index;
+
+// .gnu.hash Section details
+Elf64_Shdr *pme_gnuhash_hdr;
+char *gnuhash_ptr;
+int gnuhash_index;
 
 
 //pme_err_exit(): Routine which will be called if an error has occured.
@@ -98,16 +128,19 @@ void pme_parse_sh_table(char *pme_elf_ptr);
 //Routine displays contents of a specified Section Header Entry.
 void pme_display_sh_entry(Elf64_Shdr *pme_sh_hdr);
 
-// Name says it all!
 void pme_parse_symbol_table();
-
 void pme_display_symbol(Elf64_Sym *symtab_entry_ptr);
 
 void pme_parse_text_section();
-
 void pme_parse_rodata_section();
-
 void pme_parse_strtab_section();
+void pme_parse_data_section();
+void pme_parse_bss_section();
+void pme_parse_comment_section();
+void pme_parse_interp_section();
+void pme_parse_noteabi_section();
+void pme_parse_buildid_section();
+void pme_parse_gnuhash_section();
 
 
 #endif

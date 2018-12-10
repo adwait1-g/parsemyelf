@@ -44,13 +44,20 @@ int main(int argc, char **argv) {
 	while(1) {
 
 		printf("\n\nOptions: \n");
-		printf("0. ELF Header details \n");
-		printf("1. Program Header Table entries \n");
-		printf("2. Section Header Table entries \n");
-		printf("3. Symbol Table(.symtab) entries \n");
-		printf("4. .text Section (Gives the disassembly)\n");
-		printf("5. .rodata Section \n");
-		printf("6. .strtab Section \n");
+		printf("0.	ELF Header details \n");
+		printf("1.	Program Headers \n");
+		printf("2.	Section Headers \n");
+		printf("3.	.symtab Section \n");
+		printf("4. 	.text Section (Gives the disassembly)\n");
+		printf("5. 	.rodata Section \n");
+		printf("6. 	.strtab Section \n");
+		printf("7. 	.data Section \n");
+		printf("8. 	.bss Section \n");
+		printf("9. 	.comment Section \n");
+		printf("10. 	.interp Section \n");
+		printf("11.	.note.ABI-tag Section \n");
+		printf("12.	.note.gnu.build-id Section \n");
+		printf("13.	.gnu.hash Section \n");
 			
 		scanf("%d", &choice);
 
@@ -80,6 +87,34 @@ int main(int argc, char **argv) {
 
 			case 6:
 				pme_parse_strtab_section();
+				break;
+
+			case 7: 
+				pme_parse_data_section();
+				break;
+
+			case 8: 
+				pme_parse_bss_section();
+				break;
+
+			case 9: 
+				pme_parse_comment_section();
+				break;
+
+			case 10: 
+				pme_parse_interp_section();
+				break;
+
+			case 11: 
+				pme_parse_noteabi_section();
+				break;
+
+			case 12: 
+				pme_parse_buildid_section();
+				break;
+
+			case 13: 
+				pme_parse_gnuhash_section();
 				break;
 
 			default:
