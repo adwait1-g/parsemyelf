@@ -40,33 +40,12 @@ ShstrndxSection64::ShstrndxSection64(unsigned char *PmeFilePtr, std::string name
 	SectionOffset = offset;
 	SectionSize = size;
 
-	// Allocate memory to store the section
-	Bytes = (unsigned char *)malloc(SectionSize);
-
-	// Copy the section from memory mapping into Bytes
-	memcpy(Bytes, PmeFilePtr + SectionOffset, SectionSize);
+	// Get the SectionPtr. 
+	SectionPtr = (unsigned char* )(FilePtr + SectionOffset);
 	
-	// Now, every function will use Bytes and not PmeFilePtr
+
 	
 }
 
 ShstrndxSection64::~ShstrndxSection64() {
-
-	free(Bytes);
 }
-
-
-
-// This method does not really return a string. 
-// Take a look at this StackOverflow Answer: https://stackoverflow.com/questions/3282608/another-c-learning-moment-returning-strings-from-functions. 
-
-
-std::string ShstrndxSection64::GetSectionName(Elf64_Word sh_name) {
-
-	char *ptr = (char *)(Bytes + sh_name);
-
-	std::string name(ptr);
-
-	return name;
-}
-

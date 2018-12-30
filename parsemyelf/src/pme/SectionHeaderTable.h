@@ -34,7 +34,9 @@ class Sctn64HeaderTable {
 private: 
 
 	// Map which help us in retriving Section Header based on it's name
-	std::vector<Sctn64Header> Sctn64HdrTbl;
+	std::unordered_map<std::string, Sctn64Header> Sctn64HdrTbl;
+
+	// General details about the table
 	unsigned char *FilePtr;
 	Elf64_Off e_shoff;
 	Elf64_Half e_shentsize;

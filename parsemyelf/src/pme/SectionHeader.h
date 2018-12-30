@@ -45,7 +45,7 @@ private:
 	std::string SectionName;
 
 	// Pointer to it's respective Section class
-	Section64 *SectionPtr;
+	Section64 *SectionPointer;
 	
 	// Unordered-Map to store details.
 	std::unordered_map<std::string, std::string> Sctn64HdrMap;
@@ -77,14 +77,3 @@ public:
 };
 
 }	// namespace end
-
-
-
-
-
-
-
-
-
-
-

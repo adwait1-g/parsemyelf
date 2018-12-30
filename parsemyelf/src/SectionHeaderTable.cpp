@@ -38,7 +38,8 @@ Sctn64HeaderTable::Sctn64HeaderTable(unsigned char *PmeFilePtr, Elf64_Off shoff,
 
 	// Populate the vector
 	while(index < e_shnum) {
-		Sctn64HdrTbl.push_back(Sctn64Header(FilePtr, e_shoff, e_shentsize, index));
+		Sctn64Header SHdr(FilePtr, e_shoff, e_shentsize, index);
+		Sctn64HdrTbl.insert({SHdr.sh_name(), Sctn64Header(FilePtr, e_shoff, e_shentsize, index)});
 		index++;
 	}
 
@@ -53,23 +54,15 @@ Sctn64HeaderTable::~Sctn64HeaderTable() {
 // A simple display routine which you can use!
 void Sctn64HeaderTable::DisplayTable() {
 	
-	std::cout<<"Section Header Table: \n"<<std::endl;
-	for(unsigned count = 0; count < e_shnum; count++) {
-		std::cout<<"|----------------------------------------------------------------------------|"<<std::endl;
-		std::cout<<"Section Header "<<count<<"\n"<<std::endl;
-		Sctn64HdrTbl[count].DisplayHeader();
+	std::cout<<"Section Header Table: "<<std::endl;
+	for(std::pair<std::string, Sctn64Header> element : Sctn64HdrTbl) {
+		std::cout<<"|-------------------------------------------------------------------------------|"<<std::endl;
+		element.second.DisplayHeader();
 	}
-
-	return;
 }
 
 
-
-
-
-
-
-
-
-
-
+// Returns the complete table
+std::unordered_map<std::string, Sctn64Header> Sctn64HeaderTable::GetCompleteTable() {
+	return Sctn64HdrTbl;
+}

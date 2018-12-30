@@ -36,14 +36,16 @@ class Section64 {
 
 protected: 
 
+	// Actual File pointer
 	unsigned char *FilePtr;
 
-	// Points to the array of bytes. 
-	// Will be using malloc here - should find a way of bypassing malloc
-	unsigned char *Bytes;
+	// General information about the section
 	std::string SectionName;
 	Elf64_Off SectionOffset;
 	Elf64_Half SectionSize;
+
+	// Pointer pointing to the section
+	unsigned char *SectionPtr;
 
 public: 
 
@@ -68,103 +70,19 @@ public:
 //
 //---------------------------//
 
-
 class ShstrndxSection64 : public Section64 {
-
-
-public: 
-	ShstrndxSection64(unsigned char *PmeFilePtr, std::string name, Elf64_Off offset, Elf64_Half size);
-
-	~ShstrndxSection64();
-
-	std::string GetSectionName(Elf64_Word sh_name);
-
-};
-
-
-//---------------------------//
-//
-// class: NoNameSection64
-//
-// Section: No name for this section.
-//
-//---------------------------//
-
-/*
-class NoNameSection64 : public Section64 {
-
-public: 
-	NoNameSection64(unsigned char *PmeFilePtr, std::string name, Elf64_Off offset, Elf64_Half size);
-
-	~NoNameSection64();
-
-};
-
-
-//---------------------------//
-//
-// class: InterpSection64
-//
-// Section: .interp
-//
-//---------------------------//
-
-
-class InterpSection64 : public Section64 {
-
-public: 
-	InterpSection64(unsigned char *PmeFilePtr, std::string name, Elf64_Off offset, Elf64_Half size);
-
-	~InterpSection64();
-
-	std::string GetInterpName();
-};
-
-
-//---------------------------//
-//
-// class: NoteAbiTagSection64
-//
-// Section: .note.ABI-tag
-//
-// Methods: 
-//
-// 1. DisplayDetails: Will display the whole note in human readable form
-//
-// 2. n_namesz: Returns the NameSize
-//
-// 3. n_descsz: Returns the DescriptionSize
-//
-// 4. n_type: Returns the note type
-//
-// 4. 
-
-
-class NoteAbiTagSection64 : public Section64 {
 
 private: 
 	
-	Elf64_Nhdr NoteHdr;
-	
-public: 
-	NoteAbiTagSection64(unsigned char *PmeFilePtr, std::string name, Elf64_Off offset, Elf64_Half size);
 
-	~NoteAbiTagSection64();
+public: 
+
+	ShstrndxSection64(unsigned char* PmeFilePtr, std::string name, Elf64_Off offset, Elf64_Half size);
+
+	~ShstrndxSection64();
 
 
 };
-
-
-*/
-
-
-
-
-
-
-
-
-
 
 
 } // namespace end
