@@ -17,9 +17,9 @@
 //---------------------------------------------------------------------//
 
 
-#include "pme.h"
-#include "ProgramHeader.h"
-#include "ProgramHeaderTable.h"
+#include "pme/pme.h"
+#include "pme/ProgramHeader.h"
+#include "pme/ProgramHeaderTable.h"
 
 using namespace pme;
 

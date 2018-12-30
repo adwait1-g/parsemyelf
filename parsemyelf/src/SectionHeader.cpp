@@ -17,9 +17,8 @@
 //---------------------------------------------------------------------//
 
 
-#include "pme.h"
-#include "SectionHeader.h"
-//#include "ElfHeader.h"
+#include "pme/pme.h"
+#include "pme/SectionHeader.h"
 
 using namespace pme;
 

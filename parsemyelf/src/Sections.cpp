@@ -16,8 +16,8 @@
 //---------------------------------------------------------------------//
 
 
-#include "pme.h"
-#include "Sections.h"
+#include "pme/pme.h"
+#include "pme/Sections.h"
 
 using namespace pme;
 

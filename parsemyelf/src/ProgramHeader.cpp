@@ -16,8 +16,8 @@
 //
 //---------------------------------------------------------------------//
 
-#include "pme.h"
-#include "ProgramHeader.h"
+#include "pme/pme.h"
+#include "pme/ProgramHeader.h"
 
 using namespace pme;
 

@@ -1,8 +1,9 @@
-# parsemyelf
-A toy tool written to understand Internal Structure of ELF . It is written purely in C.
+PME - ParseMyElf
 
-This is how you compile it:
+PME is a 64-bit ELF parser. 
 
-	gcc parsemyelf.c parse_elf_header.c parse_ph_table.c parse_sh_table.c parse_all_sections.c pme.c -o pme
+I started writing the tool in C. All the C sourcecode is in the **C_src** directory. 
 
-This will give you an executable **pme** and that is the tool. 
+I have started rewriting the complete tool in C++, because I felt it is more advantageous. All the details are present in **src** directory. 
+
+The C version is no longer under development. 

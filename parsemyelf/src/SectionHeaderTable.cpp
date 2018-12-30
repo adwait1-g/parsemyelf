@@ -17,9 +17,9 @@
 //---------------------------------------------------------------------//
 
 
-#include "pme.h"
-#include "SectionHeader.h"
-#include "SectionHeaderTable.h"
+#include "pme/pme.h"
+#include "pme/SectionHeader.h"
+#include "pme/SectionHeaderTable.h"
 
 using namespace pme;
 

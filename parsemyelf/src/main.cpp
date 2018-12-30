@@ -16,12 +16,12 @@
 //
 //----------------------------------------------------------------------//
 
-#include "pme.h"
-#include "ElfHeader.h"
-#include "ProgramHeader.h"
-#include "ProgramHeaderTable.h"
-#include "SectionHeader.h"
-#include "SectionHeaderTable.h"
+#include "pme/pme.h"
+#include "pme/ElfHeader.h"
+#include "pme/ProgramHeader.h"
+#include "pme/ProgramHeaderTable.h"
+#include "pme/SectionHeader.h"
+#include "pme/SectionHeaderTable.h"
 
 using namespace pme; 
 

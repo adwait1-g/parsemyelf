@@ -17,8 +17,8 @@
 //---------------------------------------------------------------------//
 
 
-#include "pme.h"
-#include "ElfHeader.h"
+#include "pme/pme.h"
+#include "pme/ElfHeader.h"
 
 using namespace pme;
 
