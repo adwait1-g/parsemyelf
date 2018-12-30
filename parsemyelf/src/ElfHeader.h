@@ -38,6 +38,10 @@ private:
 	//ELF Header
 	Elf64_Ehdr Elf64Hdr;
 	unsigned char *FilePtr;
+	
+	// This points to the Section Header String Table
+	// Will be used by to get Sections' names
+	char *ShStrTabPtr;
 
 	// A Hash-Table to store details of the header
 	std::unordered_map<std::string, std::string> Elf64HdrMap;
@@ -68,6 +72,9 @@ public:
 	Elf64_Half e_phnum();
 	Elf64_Half e_shnum();
 	Elf64_Half e_shstrndx();
+
+	// Returns the ShStrTabPtr
+	char *GetShStrTabPtr();
 
 	// You can either use the above API to write your own display method or use this method: 
 	void DisplayElfHeader();

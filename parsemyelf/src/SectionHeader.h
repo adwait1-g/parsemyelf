@@ -16,6 +16,9 @@
 //
 //---------------------------------------------------------------------//
 
+
+#include "Sections.h"
+
 namespace pme {
 
 
@@ -46,6 +49,7 @@ private:
 	
 	// Unordered-Map to store details.
 	std::unordered_map<std::string, std::string> Sctn64HdrMap;
+
 public: 
 
 	// Constructor
@@ -53,7 +57,7 @@ public:
 			Elf64_Off shoff,
 			Elf64_Half shentsize,
 			unsigned index);
-
+	// Destructor
 	~Sctn64Header();
 
 	std::string sh_name();
@@ -67,8 +71,9 @@ public:
 	Elf64_Xword sh_info();
 	Elf64_Xword sh_addralign();
 	Elf64_Xword sh_entsize();
-	
-	void DisplaySctnHeader();
+
+	// A simple display method
+	void DisplayHeader();
 };
 
 }	// namespace end

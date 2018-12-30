@@ -140,7 +140,7 @@ void pme_parse_comment_section();
 void pme_parse_interp_section();
 void pme_parse_noteabi_section();
 void pme_parse_buildid_section();
-void pme_parse_gnuhash_section();
+//void pme_parse_gnuhash_section();
 
 
 #endif

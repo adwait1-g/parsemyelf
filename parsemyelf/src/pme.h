@@ -32,8 +32,13 @@
 
 namespace pme{
 
-	void PmeErrExit(const char *errmsg);
+	// Simple Error routine
+	void PmeErrExit(const char* errmsg);
 
+	void PmeLogo();
+	
+	//  Given the File Pointer, this routine returns the pointer to .shstrtab section.
+	char* PmeGetShStrTabPtr(unsigned char* PmeFilePtr);
 
 }
 

@@ -17,9 +17,11 @@
 //----------------------------------------------------------------------//
 
 #include "pme.h"
-#include "ELFHeader.h"
+#include "ElfHeader.h"
 #include "ProgramHeader.h"
 #include "ProgramHeaderTable.h"
+#include "SectionHeader.h"
+#include "SectionHeaderTable.h"
 
 using namespace pme; 
 
@@ -31,6 +33,8 @@ int main(int argc, char **argv) {
 		std::cout<<"Usage: "<<argv[0]<<" ELF_FILE_NAME ELF_FILE_SIZE"<<std::endl;
 		return -1;
 	}
+
+	PmeLogo();
 
 	// Required variables
 	int PmeFd, PmeFileSize, option;
@@ -51,15 +55,21 @@ int main(int argc, char **argv) {
 	if(PmeFilePtr == NULL) 
 		PmeErrExit("Error: Unable to copy ELF File onto main memory");
 
-	system("clear");
+	//system("clear");
 
 	// Create the required objects
+	std::cout<<"Pme: Creating 64-bit Elf Header object"<<std::endl;
 	Elf64Header Elf64Hdr(PmeFilePtr);
-	
+	std::cout<<"Pme: Successfully created and populated 64-bit Elf Header object"<<std::endl;
+
+	std::cout<<"Pme: Creating 64-bit Program Header Table object"<<std::endl;
 	Prgm64HeaderTable Prgm64HdrTbl(PmeFilePtr, Elf64Hdr.e_phoff(), Elf64Hdr.e_phentsize(), Elf64Hdr.e_phnum());
+	std::cout<<"Pme: Successfully created and populated 64-bit Program Header Table object"<<std::endl;
+
+	std::cout<<"Pme: Creating 64-bit Section Header Table object"<<std::endl;
+	Sctn64HeaderTable Sctn64HdrTbl(PmeFilePtr, Elf64Hdr.e_shoff(), Elf64Hdr.e_shentsize(), Elf64Hdr.e_shnum(), Elf64Hdr.e_shstrndx());
+	std::cout<<"Pme: Successfully created and populated 64-bit Section Header Table object"<<std::endl;
 	
-
-
 	while(1) {
 
 		std::cout<<"\n\nOptions: "<<std::endl;
@@ -81,7 +91,7 @@ int main(int argc, char **argv) {
 				break;
 			
 			case 2:
-			//	DisplaySectionHeaders(PmeFilePtr);
+				Sctn64HdrTbl.DisplayTable();
 				break;
 
 			case 3: 

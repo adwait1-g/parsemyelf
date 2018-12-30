@@ -33,38 +33,35 @@ Sctn64HeaderTable::Sctn64HeaderTable(unsigned char *PmeFilePtr, Elf64_Off shoff,
 	e_shnum = shnum;
 	e_shstrndx = shstrndx;
 
-	
-	// Job0: Get the pointer which points to .shstrndx
-	// This will help in building the Table based on section names
-	
-	char *ShStrBytes;
-
-	ShStrBytes = (char *)(PmeFilePtr + Sctn64Header::GetShStrTabOffset(PmeFilePtr, e_shoff, e_shentsize, e_shnum, e_shstrndx));
-
 	int index = 0;
+	std::string name;
 
-	while(index < e_shnum) { 
-		
-		Sctn64Header section_header(PmeFilePtr, e_shoff, e_shentsize, index);
-		char *ptr = ShStrBytes + section_header.sh_name();
+	// Populate the vector
+	while(index < e_shnum) {
+		Sctn64HdrTbl.push_back(Sctn64Header(FilePtr, e_shoff, e_shentsize, index));
+		index++;
+	}
 
+	return;
+}
 
+Sctn64HeaderTable::~Sctn64HeaderTable() {
 
-
-
-
-
-
-
-
-
+}
 
 
+// A simple display routine which you can use!
+void Sctn64HeaderTable::DisplayTable() {
+	
+	std::cout<<"Section Header Table: \n"<<std::endl;
+	for(unsigned count = 0; count < e_shnum; count++) {
+		std::cout<<"|----------------------------------------------------------------------------|"<<std::endl;
+		std::cout<<"Section Header "<<count<<"\n"<<std::endl;
+		Sctn64HdrTbl[count].DisplayHeader();
+	}
 
-
-
-
-
+	return;
+}
 
 
 

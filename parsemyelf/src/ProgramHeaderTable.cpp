@@ -37,7 +37,6 @@ Prgm64HeaderTable::Prgm64HeaderTable(unsigned char *PmeFilePtr, Elf64_Off phoff,
 
         // Populate the vector
         while(index < e_phnum) {
-                std::cout<<"index = "<<index<<std::endl;
                 Prgm64HdrTblVector.push_back(Prgm64Header(FilePtr, e_phoff, e_phentsize, index));
                 index++;
         }

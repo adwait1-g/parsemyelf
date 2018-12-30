@@ -114,7 +114,7 @@ int main(int argc, char **argv) {
 				break;
 
 			case 13: 
-				pme_parse_gnuhash_section();
+//				pme_parse_gnuhash_section();
 				break;
 
 			default:

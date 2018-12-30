@@ -18,7 +18,7 @@
 
 
 #include "pme.h"
-#include "ELFHeader.h"
+#include "ElfHeader.h"
 
 using namespace pme;
 
@@ -315,7 +315,24 @@ Elf64Header::Elf64Header(unsigned char *PmeFilePtr) {
 		// Index of Section Header String Table
 		Elf64HdrMap["e_shstrndx"] = std::to_string(Elf64Hdr.e_shstrndx);
 
-		return;
+
+
+	// From here, all code will handle the Section Header String Table
+	
+
+	// Temporary variable
+	Elf64_Shdr *ShStrTabHdr;
+
+	ShStrTabHdr = (Elf64_Shdr *)(PmeFilePtr + e_shoff() + e_shentsize() * e_shstrndx());
+	
+	// This pointer will be used every section header to know it's name
+	ShStrTabPtr = (char *)(PmeFilePtr + ShStrTabHdr->sh_offset);
+
+
+	// PmeShStrTabPtr is a global variable which can be anyone
+	//PmeShStrTabPtr = ShStrTabPtr;
+
+	return;
 }
 
 
@@ -399,6 +416,15 @@ Elf64_Half Elf64Header::e_shnum() {
 Elf64_Half Elf64Header::e_shstrndx() {
 	return Elf64Hdr.e_shstrndx;
 }
+
+
+// This method returns ShStrTabPtr
+char* Elf64Header::GetShStrTabPtr() {
+	return ShStrTabPtr;
+}
+
+
+
 
 
 // Display the ELF Header

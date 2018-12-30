@@ -19,6 +19,7 @@
 
 #include "pme.h"
 #include "SectionHeader.h"
+//#include "ElfHeader.h"
 
 using namespace pme;
 
@@ -45,7 +46,10 @@ Sctn64Header::Sctn64Header(unsigned char *PmeFilePtr, Elf64_Off shoff, Elf64_Hal
 	Sctn64Hdr.sh_entsize = sctn_hdr->sh_entsize;
 
 
-	// Should somehow get SectionName;
+	// Section Name
+	SectionName = std::string(PmeGetShStrTabPtr(FilePtr) + Sctn64Hdr.sh_name);
+
+	Sctn64HdrMap["sh_name"] = SectionName;
 	
 	// Section Type
 	switch(Sctn64Hdr.sh_type) {
@@ -280,29 +284,16 @@ Sctn64Header::Sctn64Header(unsigned char *PmeFilePtr, Elf64_Off shoff, Elf64_Hal
 }
 
 
-// Updating the Section Name
-void Sctn64Header::UpdateName(std::string name) {
-	SectionName = name;
+// Destructor
+Sctn64Header::~Sctn64Header() {
+
 }
-
-// Get Section Header String Table's File offset
-Elf64_Off Sctn64Header::GetShStrTabOffset(unsigned char *PmeFilePtr, Elf64_Off shoff, Elf64_Half shentsize, Elf64_Half shnum, Elf64_Half shstrndx) {
-	
-	char *ShStrTabPtr;
-	Sctn64Header ShStrTab(PmeFilePtr, shoff, shentsize, shstrndx);
-
-	 return ShStrTab.sh_offset();
-}
-	
-
-
-
 
 
 // API to access section header details. 
 
-std::string sh_name() {
-	return SectionName;
+std::string Sctn64Header::sh_name() {
+	return Sctn64HdrMap["sh_name"];
 }
 
 
@@ -350,3 +341,32 @@ Elf64_Xword Sctn64Header::sh_addralign() {
 Elf64_Xword Sctn64Header::sh_entsize() {
 	return Sctn64Hdr.sh_entsize;
 }
+
+
+void Sctn64Header::DisplayHeader() {
+	
+	std::cout<<"Name:	"<<sh_name()<<std::endl;
+	std::cout<<"Type:	"<<sh_type()<<std::endl;
+	std::cout<<"Flags:	"<<sh_flags()<<std::endl;
+	std::cout<<"Address:	0x"<<std::hex<<sh_addr()<<std::dec<<std::endl;
+	std::cout<<"File Offset:"<<sh_offset()<<" bytes(from beginning)"<<std::endl;
+	std::cout<<"SectionSize:"<<sh_size()<<" bytes"<<std::endl;
+	std::cout<<"Link:	"<<sh_link()<<std::endl;
+	std::cout<<"Info:	"<<sh_info()<<std::endl;
+	std::cout<<"Alignment:	"<<sh_addralign()<<std::endl;
+	std::cout<<"Table Entry Size:	"<<sh_entsize()<<std::endl;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
