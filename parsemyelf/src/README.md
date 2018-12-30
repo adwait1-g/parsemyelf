@@ -25,7 +25,7 @@ There are 2 tools which I specifically loved to play around with. Scapy and ns3.
 
 **ns3** : Hands down, one of the best open source tools to play around with Computer Networks, understand it better. All the required classes were present. I just had to use them and simulate something. This idea had a mark. 
 
-***scapy**: Man, this tool is awesome! . It is so easy to use. It is a simple interpreter. To create an IP Packet, just ip = IP() is enough. It will encourage everyone to use it and learn and understand stuff better. 
+**scapy** : Man, this tool is awesome! . It is so easy to use. It is a simple interpreter. To create an IP Packet, just ip = IP() is enough. It will encourage everyone to use it and learn and understand stuff better. 
 
 ### End Goal
 
