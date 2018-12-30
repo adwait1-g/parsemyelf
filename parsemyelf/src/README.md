@@ -4,7 +4,7 @@ PME is a simple 64-bit ELF Parser written in C++. The goal was to learn C++ and 
 
 This is how you get the tool: 
 
-    $ g++ main.cpp pme.cpp ElfHeader.cpp ProgramHeader.cpp ProgramHeaderTable.cpp  SectionHeader.cpp  SectionHeaderTable.cpp -std=c++11 -o pme
+    parsemyelf/parsemyelf/src$ g++ main.cpp pme.cpp ElfHeader.cpp ProgramHeader.cpp ProgramHeaderTable.cpp  SectionHeader.cpp  SectionHeaderTable.cpp -std=c++11 -o pme
 
 You will get an executable with name **pme**, that is the tool. 
 
