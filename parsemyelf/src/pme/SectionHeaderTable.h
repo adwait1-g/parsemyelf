@@ -33,8 +33,11 @@ class Sctn64HeaderTable {
 
 private: 
 
-	// Map which help us in retriving Section Header based on it's name
-	std::unordered_map<std::string, Sctn64Header> Sctn64HdrTbl;
+	// Map which retrival using name
+	std::unordered_map<std::string, Sctn64Header> Sctn64HdrTblName;
+
+	// Map with retrival using index
+	std::unordered_map<unsigned int, Sctn64Header> Sctn64HdrTblIndex;
 
 	// General details about the table
 	unsigned char *FilePtr;
@@ -52,8 +55,10 @@ public:
 	// Destructor
 	~Sctn64HeaderTable();
 
-	// Give the complete SHT which you can use.
-	std::unordered_map<std::string, Sctn64Header> GetCompleteTable();
+	// Give the complete SHT with name as Index
+	std::unordered_map<std::string, Sctn64Header> GetTableByName();
+
+	std::unordered_map<unsigned int, Sctn64Header> GetTableByIndex();
 
 	// Use the above table to write your own display method or use the following simple display method: 
 	void DisplayTable();

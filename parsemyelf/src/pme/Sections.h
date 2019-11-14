@@ -16,6 +16,8 @@
 //
 //---------------------------------------------------------------------//
 
+#ifndef _SECTIONS_H
+#define _SECTIONS_H 1
 
 #include "pme.h"
 
@@ -56,7 +58,7 @@ public:
 
 	// This is a pure virtual function. 
 	// Will be defined for all children classes
-	void virtual DisplayDetails() = 0;
+	//void virtual DisplayDetails() = 0;
 
 };
 
@@ -70,19 +72,26 @@ public:
 //
 //---------------------------//
 
-class ShstrndxSection64 : public Section64 {
+class ShstrtabSection64 : public Section64 {
 
 private: 
+
+	std::vector<std::string> SectionsNames;
 	
 
 public: 
 
-	ShstrndxSection64(unsigned char* PmeFilePtr, std::string name, Elf64_Off offset, Elf64_Half size);
+	// Constructor
+	ShstrtabSection64(unsigned char* PmeFilePtr, std::string name, Elf64_Off offset, Elf64_Half size);
 
-	~ShstrndxSection64();
+	~ShstrtabSection64();
 
+	// Returns this vector of strings
+	std::vector<std::string> GetAllSectionsNames();
 
 };
 
 
 } // namespace end
+
+#endif		// _SECTIONS_H

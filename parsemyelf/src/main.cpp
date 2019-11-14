@@ -22,6 +22,7 @@
 #include "pme/ProgramHeaderTable.h"
 #include "pme/SectionHeader.h"
 #include "pme/SectionHeaderTable.h"
+#include "pme/Sections.h"
 
 using namespace pme; 
 
@@ -69,6 +70,14 @@ int main(int argc, char **argv) {
 	std::cout<<"Pme: Creating 64-bit Section Header Table object"<<std::endl;
 	Sctn64HeaderTable Sctn64HdrTbl(PmeFilePtr, Elf64Hdr.e_shoff(), Elf64Hdr.e_shentsize(), Elf64Hdr.e_shnum(), Elf64Hdr.e_shstrndx());
 	std::cout<<"Pme: Successfully created and populated 64-bit Section Header Table object"<<std::endl;
+
+
+	std::unordered_map<std::string, Sctn64Header> Table = Sctn64HdrTbl.GetTableByName();
+	
+	Table[".shstrtab"].DisplayHeader();
+
+
+
 	
 	while(1) {
 

@@ -16,6 +16,8 @@
 //
 //---------------------------------------------------------------------//
 
+#ifndef _SECTION_HEADER_H
+#define _SECTION_HEADER_H 1
 
 #include "Sections.h"
 
@@ -45,10 +47,15 @@ private:
 	std::string SectionName;
 
 	// Pointer to it's respective Section class
-	Section64 *SectionPointer;
+	// Damn, I have to use new :( 
+	Section64* SectionObj;
 	
 	// Unordered-Map to store details.
 	std::unordered_map<std::string, std::string> Sctn64HdrMap;
+
+	// Once the Section Header object is instantiated, this routine is called to update the SectionObj pointer.
+	// This is important because every section is different 
+	void UpdateSectionObj();
 
 public: 
 
@@ -77,3 +84,6 @@ public:
 };
 
 }	// namespace end
+
+
+#endif		// _SECTION_HEADER_H

@@ -32,8 +32,9 @@ Section64::~Section64() {
 
 
 
-ShstrndxSection64::ShstrndxSection64(unsigned char *PmeFilePtr, std::string name, Elf64_Off offset, Elf64_Half size) {
+ShstrtabSection64::ShstrtabSection64(unsigned char *PmeFilePtr, std::string name, Elf64_Off offset, Elf64_Half size) {
 
+	std::cout<<"Inside shstrtab constructor"<<std::endl;
 	// Populate the variables
 	FilePtr = PmeFilePtr;
 	SectionName = name;
@@ -43,9 +44,40 @@ ShstrndxSection64::ShstrndxSection64(unsigned char *PmeFilePtr, std::string name
 	// Get the SectionPtr. 
 	SectionPtr = (unsigned char* )(FilePtr + SectionOffset);
 	
-
+	// Get all section names and store it in SectionsNames. 
+	unsigned x = 0;
+	char* TempPtr = (char* )SectionPtr;
+	while(x < SectionSize) {
 	
+		if(*(TempPtr - 1) == 0x00) {
+			std::string tempname(TempPtr);
+			SectionsNames.push_back(tempname);
+		}
+		TempPtr++;
+		x++;
+	}
+
+	return;
 }
 
-ShstrndxSection64::~ShstrndxSection64() {
+ShstrtabSection64::~ShstrtabSection64() {
 }
+
+
+std::vector<std::string> ShstrtabSection64::GetAllSectionsNames() {
+	return SectionsNames;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

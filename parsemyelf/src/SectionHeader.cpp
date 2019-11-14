@@ -19,6 +19,7 @@
 
 #include "pme/pme.h"
 #include "pme/SectionHeader.h"
+#include "pme/Sections.h"
 
 using namespace pme;
 
@@ -279,7 +280,9 @@ Sctn64Header::Sctn64Header(unsigned char *PmeFilePtr, Elf64_Off shoff, Elf64_Hal
 
 		default: 
 			Sctn64HdrMap["sh_flags"] = "Section flags not found or I have not added them";
-	}
+	}	
+
+	UpdateSectionObj();
 }
 
 
@@ -342,6 +345,23 @@ Elf64_Xword Sctn64Header::sh_entsize() {
 }
 
 
+// This routine updates the SectioObj pointer in the Sctn64Header
+void Sctn64Header::UpdateSectionObj() {
+
+	
+	// .shstrtab section
+	if(sh_name() == ".shstrtab") {
+		SectionObj = new ShstrtabSection64(FilePtr, sh_name(), sh_offset(), sh_size());
+	}
+
+	else 
+		std::cout<<"Others are still under construction"<<std::endl;
+}
+
+
+
+
+// Simple Display routine
 void Sctn64Header::DisplayHeader() {
 	
 	std::cout<<"Name:	"<<sh_name()<<std::endl;
